@@ -140,11 +140,9 @@ class ReplayBuffer:
         self._futures_lock = threading.RLock()
         from torchrl.envs.transforms.transforms import Compose
 
-        if transform is None:
-            transform = Compose()
-        elif not isinstance(transform, Compose):
+        if transform is not None and not isinstance(transform, Compose):
             transform = Compose(transform)
-        transform.eval()
+            transform.eval()
         self._transform = transform
 
         if batch_size is None:
